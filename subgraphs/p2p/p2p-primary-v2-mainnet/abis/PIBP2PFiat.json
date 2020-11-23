@@ -1,0 +1,805 @@
+[
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "name": "isTDN",
+      "outputs": [
+        {
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "name": "",
+          "type": "bytes32"
+        }
+      ],
+      "name": "offers",
+      "outputs": [
+        {
+          "name": "owner",
+          "type": "address"
+        },
+        {
+          "name": "sellToken",
+          "type": "address"
+        },
+        {
+          "name": "sellAmount",
+          "type": "uint256"
+        },
+        {
+          "name": "isPartial",
+          "type": "bool"
+        },
+        {
+          "name": "buyToken",
+          "type": "address"
+        },
+        {
+          "name": "buyAmount",
+          "type": "uint256"
+        },
+        {
+          "name": "minDealAmount",
+          "type": "uint256"
+        },
+        {
+          "name": "maxDealAmount",
+          "type": "uint256"
+        },
+        {
+          "name": "minReputation",
+          "type": "uint256"
+        },
+        {
+          "name": "auditor",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "name": "",
+          "type": "address"
+        },
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "name": "offerLockedUser",
+      "outputs": [
+        {
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "on",
+      "outputs": [
+        {
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "name": "",
+          "type": "bytes32"
+        }
+      ],
+      "name": "deals",
+      "outputs": [
+        {
+          "name": "sellToken",
+          "type": "address"
+        },
+        {
+          "name": "buyToken",
+          "type": "address"
+        },
+        {
+          "name": "isBuyFiat",
+          "type": "bool"
+        },
+        {
+          "name": "seller",
+          "type": "address"
+        },
+        {
+          "name": "buyer",
+          "type": "address"
+        },
+        {
+          "name": "buyAmount",
+          "type": "uint256"
+        },
+        {
+          "name": "sellAmount",
+          "type": "uint256"
+        },
+        {
+          "name": "vote1",
+          "type": "uint8"
+        },
+        {
+          "name": "vote2",
+          "type": "uint8"
+        },
+        {
+          "name": "auditor",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "salt",
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "name": "",
+          "type": "address"
+        },
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "name": "priceOracle",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "commission",
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "name": "",
+          "type": "bytes32"
+        }
+      ],
+      "name": "offerFixedBuyer",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "controller",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "name": "_controllerAddress",
+          "type": "address"
+        },
+        {
+          "name": "_commission",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "constructor"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "name": "owner",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "name": "sellToken",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "name": "buyToken",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "name": "sellAmount",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "name": "buyAmount",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "name": "isPartial",
+          "type": "bool"
+        },
+        {
+          "indexed": false,
+          "name": "isBuyFiat",
+          "type": "bool"
+        },
+        {
+          "indexed": false,
+          "name": "limits",
+          "type": "uint256[3]"
+        },
+        {
+          "indexed": false,
+          "name": "auditor",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "name": "description",
+          "type": "string"
+        },
+        {
+          "indexed": true,
+          "name": "offerId",
+          "type": "bytes32"
+        },
+        {
+          "indexed": false,
+          "name": "metadata",
+          "type": "uint256[]"
+        }
+      ],
+      "name": "NewOffer",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "name": "dealId",
+          "type": "bytes32"
+        },
+        {
+          "indexed": false,
+          "name": "success",
+          "type": "bool"
+        },
+        {
+          "indexed": true,
+          "name": "sender",
+          "type": "address"
+        }
+      ],
+      "name": "NewDeal",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "name": "offerId",
+          "type": "bytes32"
+        },
+        {
+          "indexed": true,
+          "name": "dealId",
+          "type": "bytes32"
+        },
+        {
+          "indexed": false,
+          "name": "buyer",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "name": "sellAmount",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "name": "buyAmount",
+          "type": "uint256"
+        }
+      ],
+      "name": "NewPendingDeal",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "name": "offerId",
+          "type": "bytes32"
+        },
+        {
+          "indexed": false,
+          "name": "sellAmount",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "name": "buyAmount",
+          "type": "uint256"
+        }
+      ],
+      "name": "UpdateOffer",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "name": "offerId",
+          "type": "bytes32"
+        }
+      ],
+      "name": "CancelOffer",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "name": "dealId",
+          "type": "bytes32"
+        },
+        {
+          "indexed": false,
+          "name": "sender",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "name": "vote",
+          "type": "uint8"
+        },
+        {
+          "indexed": false,
+          "name": "counterpartVote",
+          "type": "uint8"
+        }
+      ],
+      "name": "VoteDeal",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "name": "dealId",
+          "type": "bytes32"
+        }
+      ],
+      "name": "AuditorNotification",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "name": "user",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "name": "reputation",
+          "type": "uint256"
+        }
+      ],
+      "name": "UpdateReputation",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "name": "user",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "name": "tokenAddress",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "name": "isLocked",
+          "type": "bool"
+        }
+      ],
+      "name": "OfferLock",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "name": "commission",
+          "type": "uint256"
+        }
+      ],
+      "name": "NewCommission",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "name": "offerId",
+          "type": "bytes32"
+        },
+        {
+          "indexed": false,
+          "name": "fixedBuyer",
+          "type": "address"
+        }
+      ],
+      "name": "FixedBuyer",
+      "type": "event"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "_newCommission",
+          "type": "uint256"
+        }
+      ],
+      "name": "setCommission",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "_token",
+          "type": "address"
+        },
+        {
+          "name": "_isTDN",
+          "type": "bool"
+        }
+      ],
+      "name": "setTDN",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "_token1",
+          "type": "address"
+        },
+        {
+          "name": "_token2",
+          "type": "address"
+        },
+        {
+          "name": "_oracle",
+          "type": "address"
+        }
+      ],
+      "name": "setPriceOracle",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [],
+      "name": "toggleSwitch",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "_tokens",
+          "type": "address[2]"
+        },
+        {
+          "name": "_amounts",
+          "type": "uint256[2]"
+        },
+        {
+          "name": "_settings",
+          "type": "bool[2]"
+        },
+        {
+          "name": "_limits",
+          "type": "uint256[3]"
+        },
+        {
+          "name": "_auditor",
+          "type": "address"
+        },
+        {
+          "name": "_description",
+          "type": "string"
+        },
+        {
+          "name": "_metadata",
+          "type": "uint256[]"
+        },
+        {
+          "name": "_fixedBuyer",
+          "type": "address"
+        }
+      ],
+      "name": "offerFixed",
+      "outputs": [
+        {
+          "name": "",
+          "type": "bytes32"
+        }
+      ],
+      "payable": true,
+      "stateMutability": "payable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "_tokens",
+          "type": "address[2]"
+        },
+        {
+          "name": "_amounts",
+          "type": "uint256[2]"
+        },
+        {
+          "name": "_settings",
+          "type": "bool[2]"
+        },
+        {
+          "name": "_limits",
+          "type": "uint256[3]"
+        },
+        {
+          "name": "_auditor",
+          "type": "address"
+        },
+        {
+          "name": "_description",
+          "type": "string"
+        },
+        {
+          "name": "_metadata",
+          "type": "uint256[]"
+        }
+      ],
+      "name": "offer",
+      "outputs": [
+        {
+          "name": "",
+          "type": "bytes32"
+        }
+      ],
+      "payable": true,
+      "stateMutability": "payable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "_offerId",
+          "type": "bytes32"
+        },
+        {
+          "name": "_buyAmount",
+          "type": "uint256"
+        }
+      ],
+      "name": "deal",
+      "outputs": [
+        {
+          "name": "",
+          "type": "bytes32"
+        }
+      ],
+      "payable": true,
+      "stateMutability": "payable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "_dealId",
+          "type": "bytes32"
+        },
+        {
+          "name": "_vote",
+          "type": "uint8"
+        }
+      ],
+      "name": "voteDeal",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "_dealId",
+          "type": "bytes32"
+        }
+      ],
+      "name": "requestAuditor",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "_dealId",
+          "type": "bytes32"
+        },
+        {
+          "name": "_success",
+          "type": "bool"
+        }
+      ],
+      "name": "voteDealAuditor",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "_offerId",
+          "type": "bytes32"
+        }
+      ],
+      "name": "cancelOffer",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "_offerId",
+          "type": "bytes32"
+        },
+        {
+          "name": "_buyAmount",
+          "type": "uint256"
+        }
+      ],
+      "name": "updateBuyAmount",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "_from",
+          "type": "address"
+        },
+        {
+          "name": "_value",
+          "type": "uint256"
+        }
+      ],
+      "name": "tokenFallback",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ]

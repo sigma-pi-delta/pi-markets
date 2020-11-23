@@ -1,0 +1,225 @@
+specVersion: 0.0.2
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum/contract
+    name: IdentityFactory
+    network: mainnet
+    source:
+      address: "0xca609DF4c2c28cF9B9AA9e0285a14980EA79BF41"
+      startBlock: 2900000
+      abi: IdentityFactory
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.3
+      language: wasm/assemblyscript
+      entities:
+        - DeployIdentity
+      abis:
+        - name: IdentityFactory
+          file: ./abis/IdentityFactory.json
+      eventHandlers:
+        - event: DeployIdentity(indexed address,indexed address,address,indexed address,string,bytes32)
+          handler: handleDeployIdentity
+      file: ./src/identityFactory.ts
+  - kind: ethereum/contract
+    name: NameService
+    network: mainnet
+    source:
+      address: "0x3e4B7f25A608b3E4df696E79d2D2CC354e6D6b8E"
+      startBlock: 2900000
+      abi: NameService
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.3
+      language: wasm/assemblyscript
+      entities:
+        - CreateName
+        - ChangeWallet
+        - ChangeOwner
+      abis:
+        - name: NameService
+          file: ./abis/NameService.json
+      eventHandlers:
+        - event: CreateName(string,indexed address,indexed address)
+          handler: handleCreateName
+        - event: ChangeWallet(string,indexed address)
+          handler: handleChangeWallet
+        - event: ChangeOwner(string,indexed address)
+          handler: handleChangeOwner
+      file: ./src/nameService.ts
+  - kind: ethereum/contract
+    name: Controller
+    network: mainnet
+    source:
+      address: "0x9a46F7034102d716132f4FCA1f4f36132F4E992F"
+      startBlock: 2900000
+      abi: Controller
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.3
+      language: wasm/assemblyscript
+      entities:
+        - NewToken
+      abis:
+        - name: Controller
+          file: ./abis/Controller.json
+        - name: Token
+          file: ./abis/Token.json
+      eventHandlers:
+        - event: NewToken(address,uint256,bool)
+          handler: handleTokenCreated
+        - event: NewNFToken(address,uint256,bool)
+          handler: handleNewNFToken
+        - event: NewPNFToken(address,uint256,bool)
+          handler: handleNewPNFToken
+        - event: NewAddress(uint256,address,bool)
+          handler: handleNewAddress
+        - event: NewMarket(address,address,address)
+          handler: handleNewMarket
+      file: ./src/controller.ts
+templates:
+  - name: Token
+    kind: ethereum/contract
+    network: mainnet
+    source:
+      abi: Token
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.1
+      language: wasm/assemblyscript
+      file: ./src/token.ts
+      entities:
+        - Transfer
+      abis:
+        - name: Token
+          file: ./abis/Token.json
+      eventHandlers:
+        - event: Transfer(indexed address,indexed address,uint256,indexed bytes)
+          handler: handleTransfer
+  - name: Wallet
+    kind: ethereum/contract
+    network: mainnet
+    source:
+      abi: Wallet
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.1
+      language: wasm/assemblyscript
+      file: ./src/wallet.ts
+      entities:
+        - Transfer
+      abis:
+        - name: Wallet
+          file: ./abis/Wallet.json
+        - name: Token
+          file: ./abis/Token.json
+        - name: Balance
+          file: ./abis/Balance.json
+      eventHandlers:
+        - event: Transfer(indexed address,indexed uint256,indexed address,bytes32,uint256,uint256,string)
+          handler: handleTransfer
+        - event: Receive(indexed address,indexed address,indexed bytes32,uint256)
+          handler: handleReceive
+        - event: LimitDaily(address,uint256)
+          handler: handleLimitDaily
+        - event: LimitTo(address,bool)
+          handler: handleLimitTo
+        - event: LimitValue(address,uint256)
+          handler: handleLimitValue
+        - event: UnlimitDaily(address)
+          handler: handleUnlimitDaily
+        - event: UnlimitTo()
+          handler: handleUnlimitTo
+        - event: UnlimitValue(address)
+          handler: handleUnlimitValue
+  - name: Identity
+    kind: ethereum/contract
+    network: mainnet
+    source:
+      abi: Identity
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.1
+      language: wasm/assemblyscript
+      file: ./src/identity.ts
+      entities:
+        - Identity
+      abis:
+        - name: Identity
+          file: ./abis/Identity.json
+      eventHandlers:
+        - event: Forward(indexed address,uint256,bytes,bytes)
+          handler: handleForward
+        - event: FactoryForward(indexed uint256,address)
+          handler: handleFactoryForward
+        - event: NewOwner(address,address,address)
+          handler: handleIdentityNewOwner
+        - event: NewRecovery(address,address)
+          handler: handleIdentityNewRecovery
+        - event: NewWallet(address,address,address)
+          handler: handleIdentityNewWallet
+  - name: ERC721
+    kind: ethereum/contract
+    network: mainnet
+    source:
+      abi: ERC721
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.1
+      language: wasm/assemblyscript
+      file: ./src/commodity.ts
+      entities:
+        - Transfer
+      abis:
+        - name: ERC721
+          file: ./abis/ERC721.json
+        - name: Token
+          file: ./abis/Token.json
+      eventHandlers:
+        - event: Transfer(indexed address,indexed address,indexed uint256)
+          handler: handleTransfer 
+        - event: NewJson(indexed uint256,uint256[])
+          handler: handleNewJson
+        - event: FakeToken(indexed uint256)
+          handler: handleFakeToken
+  - name: PNFTInterface
+    kind: ethereum/contract
+    network: mainnet
+    source:
+      abi: PNFTInterface
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.1
+      language: wasm/assemblyscript
+      file: ./src/packable.ts
+      entities:
+        - Transfer
+      abis:
+        - name: PNFTInterface
+          file: ./abis/PNFTInterface.json
+        - name: Token
+          file: ./abis/Token.json
+      eventHandlers:
+        - event: Transfer(indexed address,indexed address,indexed bytes32,uint256)
+          handler: handleTransfer 
+        - event: NewJson(indexed bytes32,uint256[5])
+          handler: handleNewJson
+  - name: Balance
+    kind: ethereum/contract
+    network: mainnet
+    source:
+      abi: Balance
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.1
+      language: wasm/assemblyscript
+      file: ./src/balance.ts
+      entities:
+        - Balance
+      abis:
+        - name: Balance
+          file: ./abis/Balance.json
+      callHandlers:
+        - function: f()
+          handler: handleGetBalance

@@ -1,0 +1,217 @@
+type P2P @entity {
+  id: ID!
+  commission: BigInt!
+}
+
+type P2PCommodity @entity {
+  id: ID!
+  commission: BigInt!
+}
+
+type P2PPackable @entity {
+  id: ID!
+  commission: BigInt!
+}
+
+type Offer @entity {
+  id: ID!
+  owner: User! # address
+  name: String
+  sellToken: Token! # address
+  buyToken: Token!
+  initialSellAmount: BigInt!
+  sellAmount: BigInt!
+  buyAmount: BigInt!
+  price: BigInt!
+  isPartial: Boolean!
+  isBuyFiat: Boolean!
+  isSellFiat: Boolean!
+  minDealAmount: BigInt!
+  maxDealAmount: BigInt!
+  minReputation: BigInt!
+  auditor: Bytes
+  description: String
+  isOpen: Boolean!
+  country: [BigInt!]
+  timestamp: BigInt
+  payMethod: [BigInt!]
+  payAccount: [BigInt!]
+  deals: [Deal!]
+}
+
+#union Commodity = Gold | Diamond
+
+type OfferCommodity @entity {
+  id: ID!
+  owner: User! # address
+  name: String
+  sellToken: Token! # address
+  buyToken: Token!
+  sellId: Commodity! #tokenAddress - tokenId
+  buyAmount: BigInt!
+  isBuyFiat: Boolean
+  minReputation: BigInt!
+  auditor: Bytes
+  price: BigInt!
+  description: String
+  isOpen: Boolean!
+  country: [BigInt!]
+  timestamp: BigInt
+  payMethod: [BigInt!]
+  payAccount: [BigInt!]
+  deals: [DealCommodity!]
+}
+
+type OfferPackable @entity {
+  id: ID!
+  owner: User!
+  name: String
+  sellToken: Token!
+  buyToken: Token!
+  sellId: PackableId!
+  sellAmount: BigInt!
+  initialSellAmount: BigInt!
+  buyAmount: BigInt!
+  price: BigInt!
+  price_per_unit: BigInt!
+  isPartial: Boolean!
+  isBuyFiat: Boolean!
+  isSellFiat: Boolean!
+  minDealAmount: BigInt!
+  maxDealAmount: BigInt!
+  minReputation: BigInt!
+  auditor: Bytes
+  description: String
+  isOpen: Boolean!
+  timestamp: BigInt!
+  country: [BigInt!]
+  payMethod: [BigInt!]
+  payAccount: [BigInt!]
+  deals: [DealPackable!]
+}
+
+type Deal @entity {
+  id: ID!
+  offer: Offer!
+  seller: User!
+  buyer: User!
+  sellAmount: BigInt!
+  buyAmount: BigInt!
+  sellerVote: BigInt
+  buyerVote: BigInt
+  auditorVote: BigInt
+  isPending: Boolean!
+  isSuccess: Boolean
+  executor: Bytes
+  timestamp: BigInt
+}
+
+type DealCommodity @entity {
+  id: ID!
+  offer: OfferCommodity!
+  buyer: User!
+  seller: User!
+  buyAmount: BigInt!
+  sellerVote: BigInt
+  buyerVote: BigInt
+  auditorVote: BigInt
+  isPending: Boolean!
+  isSuccess: Boolean
+  executor: Bytes
+  timestamp: BigInt
+}
+
+type DealPackable @entity {
+  id: ID!
+  offer: OfferPackable!
+  buyer: User!
+  seller: User!
+  sellAmount: BigInt!
+  buyAmount: BigInt!
+  sellerVote: BigInt
+  buyerVote: BigInt
+  auditorVote: BigInt
+  isPending: Boolean!
+  isSuccess: Boolean
+  executor: Bytes
+  timestamp: BigInt
+}
+
+type User @entity {
+  id: ID!
+  name: String
+  offers: [Offer!]
+  commodityOffers: [OfferCommodity!]
+  packableOffers: [OfferPackable!]
+  deals: [Deal!]
+  commodityDeals: [DealCommodity!]
+  packableDeals: [DealPackable!]
+  offchainReputation: BigInt
+  isDealLocked: Boolean
+  isOfferLocked: [Lock!]
+  isCommodityDealLocked: Boolean
+  isCommodityOfferLocked: [Lock!]
+  isPackableDealLocked: Boolean
+  isPackableOfferLocked: [Lock!]
+  reputations: [Reputation!]
+}
+
+type Lock @entity {
+  id: ID!
+  isLocked: Boolean!
+  token: Token!
+  user: User! @derivedFrom(field: "isOfferLocked")
+}
+
+type Token @entity {
+  id: ID!
+  tokenSymbol: String!
+  tokenName: String!
+  tokenKind: BigInt!
+  assetCategory: BigInt
+  nftCategory: BigInt
+  pnftCategory: BigInt
+}
+
+type Commodity @entity {
+  id: ID!
+  token: Token
+  tokenId: BigInt
+  reference: String
+  isLive: Boolean
+  isP2P: Boolean
+  isFake: Boolean
+  metadata: [BigInt!]
+  nftCategory: BigInt
+  offer: OfferCommodity @derivedFrom(field: "sellId")
+}
+
+type Auditor @entity {
+  id: ID!
+  requests: [Deal!]
+  commodityRequests: [DealCommodity!]
+  packableRequests: [DealPackable!]
+}
+
+type Reputation @entity {
+  id: ID! #wallet-token
+  user: User!
+  token: Token!
+  goodReputation: BigInt!
+  badReputation: BigInt!
+  totalDeals: BigInt!
+}
+
+type Packable @entity {
+    id: ID! #tokenAddress
+    token: Token!
+    tokenKind: BigInt!
+    ids: [PackableId!]
+}
+
+type PackableId @entity {
+    id: ID! #tokenAddress + tokenKind (hacerlo tokenAddress-wallet para usar el start_with?)
+    packable: Packable! 
+    tokenId: String!
+    metadata: [BigInt!]
+}

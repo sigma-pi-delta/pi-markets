@@ -1,0 +1,152 @@
+type Identity @entity {
+    id: ID! #PIBIdentity_address
+    dataHash: Bytes!
+    owner: Bytes!
+    recovery: Bytes!
+    state: Int!
+    wallet: Wallet!
+    lastModification: BigInt!
+    creationTime: BigInt!
+}
+
+type Token @entity {
+    id: ID! #token_address
+    tokenDecimals: Int!
+    tokenSymbol: String!
+    tokenName: String!
+    totalSupply: BigInt!
+    holders: [TokenBalance!]
+    updated: Boolean!
+    tokenKind: BigInt!
+    assetCategory: BigInt
+    nftCategory: BigInt
+    pnftCategory: BigInt
+}
+
+type Wallet @entity {
+    id: ID! #wallet_address
+    name: Name
+    identity: Identity @derivedFrom(field: "wallet")
+    isBankUser: Boolean
+    balances: [TokenBalance!] @derivedFrom(field: "wallet")
+    transactions: [Transaction!]
+    isToLimited: Boolean!
+    allowedDestinations: [Wallet!]
+    valueLimits: [ValueLimit!]
+    dayLimits: [DayLimit!]
+    destinations: [Wallet!]
+}
+
+type Name @entity {
+    id: ID! #name_string
+    name: String
+    wallet: Wallet!
+    owner: Bytes
+}
+
+type TokenBalance @entity {
+    id: ID! #token_address-wallet_address
+    token: Token!
+    wallet: Wallet!
+    balance: BigInt!
+    commodities: [Commodity!]
+    packables: [PackableWallet!]
+    updated: Boolean!
+}
+
+type BankTransaction @entity {
+    id: ID! #event.transaction.hash.toHex() + "-" + event.logIndex.toString()
+    transaction: Transaction!
+    kind: BigInt
+    concept: String
+    bankFee: BankFee
+    info: String #Market's change when is an exchange tx for example
+}
+
+type Transaction @entity {
+    id: ID! #event.transaction.hash.toHex() + "-" + event.logIndex.toString()
+    from: Wallet!
+    to: Wallet!
+    currency: Token!
+    amount: BigInt!
+    packableId: String
+    data: Bytes!
+    fee: BigInt!
+    timestamp: BigInt!
+    isBankTransaction: Boolean
+    bankTransaction: BankTransaction @derivedFrom(field: "transaction")
+    nftCategory: BigInt
+    nftDescription: Commodity
+    pnftCategory: BigInt 
+    pnftDescription: PackableId
+    officialCategory: BigInt
+    officialDescription: Official
+}
+
+type BankFee @entity {
+    id: ID! #event.transaction.hash.toHex()
+    transaction: BankTransaction! @derivedFrom(field: "bankFee")
+    fee: BigInt
+    kind: BigInt 
+    info: String
+}
+
+type Commodity @entity {
+    id: ID!
+    owner: Wallet
+    token: Token
+    tokenId: BigInt
+    reference: String
+    isLive: Boolean
+    isFake: Boolean
+    metadata: [BigInt!]
+    nftCategory: BigInt
+}
+
+type Packable @entity {
+    id: ID! #tokenAddress
+    token: Token!
+    tokenKind: BigInt!
+    ids: [PackableId!]
+}
+
+type PackableId @entity {
+    id: ID! #tokenAddress + tokenKind (hacerlo tokenAddress-wallet para usar el start_with?)
+    packable: Packable! 
+    tokenId: String!
+    metadata: [BigInt!]
+}
+
+type PackableBalance @entity {
+    id: ID! #wallet + tokenAddress + tokenKind (hacerlo tokenAddress-wallet para usar el start_with?)
+    wallet: Wallet!
+    packableId: PackableId!
+    balance: BigInt!
+}
+
+type PackableWallet @entity {
+    id: ID! #wallet-tokenAddress
+    tokenBalance: TokenBalance! @derivedFrom(field: "packables")
+    packable: Packable!
+    balances: [PackableBalance!]
+}
+
+type Official @entity {
+    id: ID!
+    category: BigInt!
+    description: String!
+}
+
+type ValueLimit @entity {
+    id: ID!
+    isActive: Boolean!
+    token: Token! 
+    limit: BigInt!
+}
+
+type DayLimit @entity {
+    id: ID!
+    isActive: Boolean!
+    token: Token! 
+    limit: BigInt!
+}

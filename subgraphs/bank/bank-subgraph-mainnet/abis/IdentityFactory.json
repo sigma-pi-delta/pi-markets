@@ -1,0 +1,66 @@
+[
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "on",
+    "outputs": [{ "name": "", "type": "bool" }],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      { "name": "_identityOwner", "type": "address" },
+      { "name": "_identityRecovery", "type": "address" },
+      { "name": "_dataHash", "type": "bytes32" },
+      { "name": "_name", "type": "string" }
+    ],
+    "name": "deployIdentity",
+    "outputs": [{ "name": "", "type": "address" }],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [],
+    "name": "toggleSwitch",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      { "name": "_identityOwner", "type": "address" },
+      { "name": "_identityRecovery", "type": "address" },
+      { "name": "_dataHash", "type": "bytes32" }
+    ],
+    "name": "deployIdentity",
+    "outputs": [{ "name": "", "type": "address" }],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "name": "_controllerAddress", "type": "address" }],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "constructor"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      { "indexed": true, "name": "identity", "type": "address" },
+      { "indexed": true, "name": "owner", "type": "address" },
+      { "indexed": false, "name": "recovery", "type": "address" },
+      { "indexed": true, "name": "wallet", "type": "address" },
+      { "indexed": false, "name": "name", "type": "string" },
+      { "indexed": false, "name": "dataHash", "type": "bytes32" }
+    ],
+    "name": "DeployIdentity",
+    "type": "event"
+  }
+]
