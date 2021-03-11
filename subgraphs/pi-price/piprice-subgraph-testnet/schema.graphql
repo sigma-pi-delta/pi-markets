@@ -1,0 +1,13 @@
+type Price @entity {
+  id: ID!
+  supply: BigInt!
+  collateral: BigInt!
+  piPrice: BigDecimal!
+  collateralPrice: BigDecimal!
+  timestamp: BigInt!
+}
+
+type Emisor @entity {
+  id: ID! #0x0000000000000000000000000000000000000010
+  lastPriceTimestamp: BigInt!
+}
