@@ -1,0 +1,75 @@
+type Commission @entity {
+  id: ID!
+  dex: BigInt!
+  dexPackable: BigInt!
+}
+
+type Order @entity {
+  id: ID!
+  orderId: String!
+  owner: User!
+  sellToken: Token!
+  buyToken: Token!
+  packableId: PackableId
+  isPackable: Boolean!
+  initialAmount: BigInt!
+  amount: BigInt!
+  price: BigInt!
+  side: BigInt
+  open: Boolean!
+  cancelled: Boolean!
+  dealed: Boolean!
+  deals: [Deal!]
+  timestamp: BigInt!
+  blockNumber: BigInt!
+}
+
+type Deal @entity {
+  id: ID!
+  dealId: String!
+  tokenA: Token!
+  tokenB: Token!
+  orderA: Order!
+  orderB: Order!
+  amountA: BigInt!
+  amountB: BigInt!
+  price: BigInt!
+  side: BigInt!
+  timestamp: BigInt!
+  blockNumber: BigInt!
+}
+
+type Cancelation @entity {
+  id: ID!
+  order: Order!
+  timestamp: BigInt!
+  blockNumber: BigInt!
+}
+
+type User @entity {
+  id: ID!
+  name: String
+  orders: [Order!]
+  deals: [Deal!]
+}
+
+type Token @entity {
+  id: ID! #token_address
+  tokenSymbol: String!
+  tokenName: String!
+  updated: Boolean!
+}
+
+type Packable @entity {
+    id: ID! #tokenAddress
+    token: Token!
+    tokenKind: BigInt!
+    ids: [PackableId!]
+}
+
+type PackableId @entity {
+    id: ID! #tokenAddress + tokenKind (hacerlo tokenAddress-wallet para usar el start_with?)
+    packable: Packable! 
+    tokenId: String!
+    metadata: [BigInt!]
+}

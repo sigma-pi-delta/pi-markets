@@ -1,0 +1,144 @@
+specVersion: 0.0.2
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum/contract
+    name: Controller
+    network: mainnet
+    source:
+      address: "0xd864aD84602FE08492Bd058cD6aBc47e82CcFF0A"
+      abi: Controller
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.3
+      language: wasm/assemblyscript
+      entities:
+        - NewAddress
+        - NewCommission
+        - NewMarket
+        - NewToken
+      abis:
+        - name: Controller
+          file: ./abis/Controller.json
+        - name: Token
+          file: ./abis/Token.json
+      eventHandlers:
+        - event: NewToken(address,uint256,bool)
+          handler: handleNewToken
+        - event: NewPNFToken(address,uint256,bool)
+          handler: handleNewPNFToken
+      file: ./src/controller.ts
+  - kind: ethereum/contract
+    name: NameService
+    network: mainnet
+    source:
+      address: "0xa235C036b75413e68f373BCa100bF818423Ee5B6"
+      abi: NameService
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.3
+      language: wasm/assemblyscript
+      entities:
+        - CreateName
+        - ChangeWallet
+        - ChangeOwner
+      abis:
+        - name: NameService
+          file: ./abis/NameService.json
+      eventHandlers:
+        - event: CreateName(string,indexed address,indexed address)
+          handler: handleCreateName
+      file: ./src/user.ts
+  - kind: ethereum/contract
+    name: DEX
+    network: mainnet
+    source:
+      address: "0x960F8C078C7C2dB5dcfcd8dd8F35A6b8fA1A9DA2"
+      abi: DEX
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.3
+      language: wasm/assemblyscript
+      entities:
+        - CreateName
+      abis:
+        - name: DEX
+          file: ./abis/DEX.json
+      eventHandlers:
+        - event: CancelOrder(indexed address,indexed address,indexed address,uint256,uint256,bytes32)
+          handler: handleCancelOrder
+        - event: Deal(indexed bytes32,indexed bytes32,uint256,uint256,uint256)
+          handler: handleDeal
+        - event: SetOrder(indexed address,indexed address,indexed address,uint256[3],bytes32)
+          handler: handleSetOrder
+        - event: UpdateOrder(indexed bytes32,uint256)
+          handler: handleUpdateOrder
+        - event: NewCommission(uint256)
+          handler: handleNewCommission
+      file: ./src/dex.ts
+  - kind: ethereum/contract
+    name: DEXPackable
+    network: mainnet
+    source:
+      address: "0x571984C6f12035320e9E77603c51448F9BB36f8e"
+      abi: DEXPackable
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.3
+      language: wasm/assemblyscript
+      entities:
+        - CreateName
+      abis:
+        - name: DEXPackable
+          file: ./abis/DEXPackable.json
+      eventHandlers:
+        - event: CancelOrder(indexed address,indexed address,indexed address,uint256,uint256,bytes32)
+          handler: handleCancelOrder
+        - event: Deal(indexed bytes32,indexed bytes32,uint256,uint256,uint256)
+          handler: handleDeal
+        - event: SetOrder(indexed address,indexed address,indexed address,uint256[3],bytes32,bytes32)
+          handler: handleSetOrder
+        - event: UpdateOrder(indexed bytes32,uint256)
+          handler: handleUpdateOrder
+        - event: NewCommission(uint256)
+          handler: handleNewCommission
+      file: ./src/dex-packable.ts
+templates:
+  - name: Token
+    kind: ethereum/contract
+    network: mainnet
+    source:
+      abi: Token
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.1
+      language: wasm/assemblyscript
+      file: ./src/token.ts
+      entities:
+        - Transfer
+      abis:
+        - name: Token
+          file: ./abis/Token.json
+      eventHandlers:
+        - event: Transfer(indexed address,indexed address,uint256,indexed bytes)
+          handler: handleTransfer
+  - name: PNFTInterface
+    kind: ethereum/contract
+    network: mainnet
+    source:
+      abi: PNFTInterface
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.1
+      language: wasm/assemblyscript
+      file: ./src/packable.ts
+      entities:
+        - Transfer
+      abis:
+        - name: PNFTInterface
+          file: ./abis/PNFTInterface.json
+        - name: Token
+          file: ./abis/Token.json
+      eventHandlers:
+        - event: NewJson(indexed bytes32,uint256[5])
+          handler: handleNewJson
